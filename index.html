@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080d18">
+<meta name="description" content="Weekendownik — pomysły na weekend, pogoda i budżet dla dwojga.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<title>Weekendownik</title>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#" aria-label="Weekendownik — strona główna"><span class="brand-icon">W</span><span>weekend<span class="blue">ownik</span></span></a>
+  <button id="installBtn" class="install hidden">＋ Zainstaluj</button>
+</header>
+<main>
+  <section class="hero">
+    <div class="eyebrow">TWÓJ PLAN NA WOLNY CZAS</div>
+    <h1>Weekend zaczyna<br><span class="blue">się tutaj.</span></h1>
+    <p>Pomysły na wspólny czas, pogoda i budżet w jednym miejscu.</p>
+    <div class="hero-meta"><span class="live-dot"></span> Dla 2 osób <span class="dotsep">•</span> Budżet 150 zł</div>
+  </section>
+
+  <section class="panel location-panel">
+    <div class="section-head"><div><div class="eyebrow">NAJPIERW WYBIERZ MIEJSCE</div><h2>Gdzie jesteście?</h2></div><span class="pin">⌖</span></div>
+    <div class="location-grid">
+      <button class="loc-btn active" data-place="Siedlce">Siedlce</button>
+      <button class="loc-btn" data-place="Ciechanów">Ciechanów</button>
+    </div>
+    <label class="field-label" for="customPlace">Lub wpisz inną miejscowość</label>
+    <div class="input-row"><input id="customPlace" placeholder="Np. Łuków, Mińsk Mazowiecki"><button id="setPlace" class="small-primary">Ustaw</button></div>
+    <div class="current-place">Aktualna lokalizacja: <strong id="placeLabel">Siedlce</strong></div>
+  </section>
+
+  <section class="panel weather-panel">
+    <div class="section-head"><div><div class="eyebrow">SPRAWDŹ PRZED WYJŚCIEM</div><h2>Pogoda na weekend</h2></div><button id="refreshWeather" class="icon-btn" aria-label="Odśwież pogodę">↻</button></div>
+    <div id="weather" class="weather-content"><div class="loading">Pobieram prognozę…</div></div>
+    <p class="fineprint">Prognoza z Open-Meteo. Dane mogą się zmieniać, sprawdź je ponownie przed wyjazdem.</p>
+  </section>
+
+  <section class="section-block">
+    <div class="section-head"><div><div class="eyebrow">INSPIRACJE</div><h2>Co robimy w weekend?</h2></div><span class="count">04 POMYSŁY</span></div>
+    <div class="idea-grid">
+      <a class="idea-card" id="mapsNature" target="_blank" rel="noopener"><span class="idea-icon">🌲</span><span class="idea-title">Leśny spacer</span><span class="idea-desc">Trasy, rezerwaty i spokojne miejsca w okolicy.</span><span class="card-link">Szukaj w pobliżu ↗</span></a>
+      <a class="idea-card" id="mapsView" target="_blank" rel="noopener"><span class="idea-icon">📷</span><span class="idea-title">Punkty widokowe</span><span class="idea-desc">Miejsca na zdjęcia i krajobrazy.</span><span class="card-link">Szukaj w pobliżu ↗</span></a>
+      <a class="idea-card" id="mapsMuseum" target="_blank" rel="noopener"><span class="idea-icon">🏛️</span><span class="idea-title">Coś pod dachem</span><span class="idea-desc">Muzea, wystawy i atrakcje na niepogodę.</span><span class="card-link">Szukaj w pobliżu ↗</span></a>
+      <a class="idea-card" id="mapsDrone" target="_blank" rel="noopener"><span class="idea-icon">🛸</span><span class="idea-title">Wypad z dronem</span><span class="idea-desc">Znajdź otwarte tereny, a przed lotem sprawdź strefy.</span><span class="card-link">Szukaj w pobliżu ↗</span></a>
+    </div>
+    <div class="notice"><strong>Ważne przy dronie:</strong> aplikacja nie potwierdza legalności lotu. Przed każdym startem sprawdź aktualne strefy i wymagania w oficjalnym <a href="https://drony.gov.pl/" target="_blank" rel="noopener">serwisie drony.gov.pl</a>.</div>
+  </section>
+
+
+  <section class="panel ai-panel" id="assistant">
+    <div class="section-head">
+      <div><div class="eyebrow">ASYSTENT WEEKENDOWNIKA</div><h2>Zaplanujcie coś razem</h2></div>
+      <span class="ai-mark">AI</span>
+    </div>
+    <p class="ai-intro">Napisz, na co macie ochotę. Asystent uwzględni wybraną miejscowość, dwie osoby i budżet 150 zł.</p>
+    <div id="chatMessages" class="chat-messages" aria-live="polite">
+      <div class="chat-bubble assistant">Cześć! Mogę pomóc zaplanować wycieczkę, znaleźć atrakcje, ułożyć trasę i przygotować plan na deszcz. Od czego zaczynamy?</div>
+    </div>
+    <div class="chat-suggestions">
+      <button class="suggestion" data-prompt="Zaplanuj nam jednodniową wycieczkę na jutro.">Plan na jutro</button>
+      <button class="suggestion" data-prompt="Znajdź ciekawe miejsca na spacer i zdjęcia dronem.">Spacer i dron</button>
+      <button class="suggestion" data-prompt="Zaproponuj plan na deszczową pogodę.">Gdy pada</button>
+    </div>
+    <div class="chat-compose">
+      <textarea id="chatInput" rows="2" maxlength="3000" placeholder="Np. Zaplanuj nam jutro wycieczkę w okolicach Siedlec za 150 zł"></textarea>
+      <button id="sendChat" class="small-primary">Wyślij</button>
+    </div>
+    <div class="chat-footnote">Asystent może korzystać z wyszukiwania internetowego. Ceny, godziny i dostępność zawsze sprawdź przed wyjazdem. Korzystanie z AI wymaga własnego klucza API i może generować opłaty.</div>
+  </section>
+
+  <section class="panel budget-panel">
+    <div class="section-head"><div><div class="eyebrow">KONTROLA WYDATKÓW</div><h2>Budżet dla dwojga</h2></div><span class="budget-icon"> zł </span></div>
+    <div class="budget-numbers"><div><span class="muted">Wydane</span><strong id="spent">0 zł</strong></div><div class="remaining"><span class="muted">Pozostało</span><strong id="remaining">150 zł</strong></div></div>
+    <div class="progress"><span id="progress"></span></div>
+    <div class="input-row budget-input"><input id="expenseName" placeholder="Np. bilety, kawa"><input id="expenseAmount" type="number" min="0" step="1" placeholder="Kwota" inputmode="decimal"><button id="addExpense" class="small-primary">Dodaj</button></div>
+    <ul id="expenseList" class="expense-list"><li class="empty">Nie dodano jeszcze wydatków.</li></ul>
+    <button id="clearExpenses" class="text-btn">Wyczyść wydatki</button>
+  </section>
+
+  <section class="section-block saved-section">
+    <div class="section-head"><div><div class="eyebrow">NA PÓŹNIEJ</div><h2>Zapisane miejsca</h2></div><span class="count" id="savedCount">0 ZAPISANYCH</span></div>
+    <div class="input-row"><input id="savedName" placeholder="Nazwa miejsca lub atrakcji"><button id="savePlace" class="small-primary">Zapisz</button></div>
+    <div id="savedList" class="saved-list"><p class="empty">Zapisz miejsce, do którego chcecie wrócić.</p></div>
+  </section>
+  <footer><span class="brand-mini">W</span><span>Weekendownik</span><span class="footer-right">Prosto zaplanuj wolny czas.</span></footer>
+</main>
+<div id="toast" role="status" class="toast"></div>
+<script src="app.js"></script>
+<script src="chat.js"></script>
+</body>
+</html>
